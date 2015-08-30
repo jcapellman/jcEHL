@@ -1,13 +1,11 @@
 ﻿namespace jcEHL.ConsoleTest.TestClasses {
-    public class Person {
+    public class Person : BaseEHLItem<Person> {
         public string FirstName { get; set; }
         
         public string LastName { get; set; }
 
-        public Person() {  }
+        public Person(Person baseObject) : base(baseObject) { }
 
-        public Person(Person basePerson) {
-            Copy.Init(basePerson, this);
-        }
+        public Person() : base(null) { }
     }
 }

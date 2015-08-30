@@ -18,7 +18,10 @@ namespace jcEHL.ConsoleTest {
         static void Main(string[] args) {
             Console.WriteLine("1> Copy Test");
 
-            switch (Convert.ToInt32(Console.ReadKey())) {
+            var inputStr = Console.ReadLine();
+
+
+            switch (Convert.ToInt32(inputStr)) {
                 case 1:
                     CopyTest();
                     break;
