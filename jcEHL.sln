@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jcEHL", "jcEHL\jcEHL.csproj", "{62E5B5E6-3D50-4306-A587-9A3657075433}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "jcEHL.ConsoleTest", "jcEHL.ConsoleTest\jcEHL.ConsoleTest.csproj", "{9F7BD64B-107B-4AFE-9CAC-E23C2AA2DF10}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{62E5B5E6-3D50-4306-A587-9A3657075433}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{62E5B5E6-3D50-4306-A587-9A3657075433}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{62E5B5E6-3D50-4306-A587-9A3657075433}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{62E5B5E6-3D50-4306-A587-9A3657075433}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F7BD64B-107B-4AFE-9CAC-E23C2AA2DF10}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F7BD64B-107B-4AFE-9CAC-E23C2AA2DF10}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F7BD64B-107B-4AFE-9CAC-E23C2AA2DF10}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F7BD64B-107B-4AFE-9CAC-E23C2AA2DF10}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
