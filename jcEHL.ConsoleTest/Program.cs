@@ -1,5 +1,5 @@
 ﻿using System;
-
+using System.Collections.Generic;
 using jcEHL.ConsoleTest.TestClasses;
 
 namespace jcEHL.ConsoleTest {
@@ -15,17 +15,61 @@ namespace jcEHL.ConsoleTest {
             Console.WriteLine($"{employee.FirstName} {employee.LastName} {employee.YearsEmployed}");
         }
 
+        public static void BSONvsJSONSizeTest() {
+            var person = new Person {
+                FirstName = "Johnathan",
+                LastName = "Doey"
+            };
+
+            Console.WriteLine($"Size of JSON {person.ToJSON().Length}");
+
+            Console.WriteLine($"Size of BSON {person.ToBSON().Length}");
+        }
+
+        public static void BSONvsJSONSpeedTest() {
+            var content = new List<Person>();
+
+            for (var x = 0; x < 1000; x++) {
+                content.Add(new Person { FirstName = x.ToString(), LastName = (x*x).ToString()});
+            }
+
+            var start = DateTime.Now;
+
+            foreach (var item in content) {
+                item.ToJSON();
+            }
+            
+            Console.WriteLine($"Time to JSON: {DateTime.Now.Subtract(start).TotalSeconds}");
+
+            start = DateTime.Now;
+
+            foreach (var item in content) {
+                item.ToBSON();
+            }
+
+            Console.WriteLine($"Time to BSON: {DateTime.Now.Subtract(start).TotalSeconds}");
+        }
+
+
         static void Main(string[] args) {
             Console.WriteLine("1> Copy Test");
+            Console.WriteLine("2> BSON vs JSON (Size)");
+            Console.WriteLine("3> BSON vs JSON (Speed)");
+            Console.WriteLine("4> Quit");
 
             var inputStr = Console.ReadLine();
-
-
+            
             switch (Convert.ToInt32(inputStr)) {
                 case 1:
                     CopyTest();
                     break;
                 case 2:
+                    BSONvsJSONSizeTest();
+                    break;
+                case 3:
+                    BSONvsJSONSpeedTest();
+                    break;
+                case 4:
                     break;
             }
 
