@@ -26,6 +26,19 @@ namespace jcEHL.ConsoleTest {
             Console.WriteLine($"Size of BSON {person.ToBSON().Length}");
         }
 
+        public static void BSONvsJSONCompressSizeTest() {
+            var person = new Person {
+                FirstName = "Johnathan",
+                LastName = "Doey"
+            };
+
+            Console.WriteLine($"Size of JSON {person.ToJSON(false).Length}");
+            Console.WriteLine($"Size of JSON (Compressed) {person.ToJSON().Length}");
+
+            Console.WriteLine($"Size of BSON {person.ToBSON(false).Length}");
+            Console.WriteLine($"Size of BSON (Compressed) {person.ToBSON().Length}");
+        }
+
         public static void BSONvsJSONSpeedTest() {
             var content = new List<Person>();
 
@@ -49,13 +62,13 @@ namespace jcEHL.ConsoleTest {
 
             Console.WriteLine($"Time to BSON: {DateTime.Now.Subtract(start).TotalSeconds}");
         }
-
-
+        
         static void Main(string[] args) {
             Console.WriteLine("1> Copy Test");
             Console.WriteLine("2> BSON vs JSON (Size)");
             Console.WriteLine("3> BSON vs JSON (Speed)");
-            Console.WriteLine("4> Quit");
+            Console.WriteLine("4> BSON vs JSON (Compressed vs Uncompressed)");
+            Console.WriteLine("5> Quit");
 
             var inputStr = Console.ReadLine();
             
@@ -70,6 +83,9 @@ namespace jcEHL.ConsoleTest {
                     BSONvsJSONSpeedTest();
                     break;
                 case 4:
+                    BSONvsJSONCompressSizeTest();
+                    break;
+                case 5:
                     break;
             }
 
