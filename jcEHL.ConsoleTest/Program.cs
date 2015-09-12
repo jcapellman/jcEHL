@@ -41,6 +41,22 @@ namespace jcEHL.ConsoleTest {
             Console.WriteLine($"Size of JCON {jcon.Length}");
             Console.WriteLine($"JCON: {jcon}");
         }
+  
+        public static void JCONTests() {
+            var person = new Person {
+                FirstName = "Jojo",
+                LastName = "Doey"
+            };
+            
+            var jconString = person.ToJCON();
+
+            Console.WriteLine($"Size of JCON {jconString.Length}");
+
+            var jconObj = new Person(jconString);
+
+            Console.WriteLine($"FirstName: {jconObj.FirstName}");
+            Console.WriteLine($"LastName: {jconObj.LastName}");
+        }
 
         public static void BSONvsJSONCompressSizeTest() {
             var person = new Person {
@@ -85,7 +101,8 @@ namespace jcEHL.ConsoleTest {
             Console.WriteLine("3> BSON vs JSON (Speed)");
             Console.WriteLine("4> BSON vs JSON (Compressed vs Uncompressed)");
             Console.WriteLine("5> JCON vs BSON vs JSON (Size)");
-            Console.WriteLine("6> Quit");
+            Console.WriteLine("6> Object to JCON and string to JCON");
+            Console.WriteLine("7> Quit");
 
             var inputStr = Console.ReadLine();
             
@@ -106,6 +123,9 @@ namespace jcEHL.ConsoleTest {
                     JCONvsBSONvsJSONSizeTest();
                     break;
                 case 6:
+                    JCONTests();
+                    break;
+                case 7:
                     break;
             }
 

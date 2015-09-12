@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Reflection;
+using jcEHL.JCON;
 
 namespace jcEHL {
     public static class Copy {
@@ -13,6 +14,18 @@ namespace jcEHL {
             }
 
             return newItem;
+        }
+
+        public static void InitT<T>(T objValue, string value) {
+            var converted = JCONConvert.DeserializeObject<T>(value);
+
+            var fields = objValue.GetType().GetRuntimeProperties().OrderBy(a => a.Name);
+
+            foreach (var field in fields) {
+                var val = field.GetValue(converted);
+
+                field.SetValue(objValue, val);
+            }
         }
     }
 }

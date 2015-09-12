@@ -15,7 +15,7 @@ namespace jcEHL {
 
             Copy.Init(baseObject, this);
         }
-
+        
         public string ToJSON(bool compress = true) {
             return JsonConvert.SerializeObject(this);
         }
@@ -24,24 +24,12 @@ namespace jcEHL {
             return BitConverter.ToString(ToBSONArray(compress));
         }
 
-        public byte[] ToJCON(bool compress = true) {
-            var data = JCONSerialize.Serialize(this.ToByte());
-
-            return (compress ? BaseEHLItem<T>.compress(BitConverter.ToString(data)) : data);
+        public string ToJCON(bool compress = true) {
+            return JCONConvert.SerializeObject(this);
         }
 
-        public void FromJCON(byte[] data) {
-            var unJcon = JCONDeserialize.Deserialize(data);
-
-            using (var ms = new MemoryStream(unJcon)) {
-                using (var brs = new BinaryReader(ms)) {
-                    var br = new BsonReader(brs);
-                    {
-
-
-                    }
-                }
-            }
+        public void FromJCON(string value) {
+            Copy.Init(JCONConvert.DeserializeObject<T>(value), this);
         }
 
         public byte[] ToByte() {

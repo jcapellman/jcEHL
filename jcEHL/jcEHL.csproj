@@ -38,6 +38,7 @@
     <Compile Include="BaseHttpHandler.cs" />
     <Compile Include="Copy.cs" />
     <Compile Include="JCON\BaseJCON.cs" />
+    <Compile Include="JCON\JCONConvert.cs" />
     <Compile Include="JCON\JCONSerialize.cs" />
     <Compile Include="JCON\JCONDeserialize.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

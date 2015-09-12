@@ -6,6 +6,10 @@
 
         public Person(Person baseObject) : base(baseObject) { }
 
+        public Person(string jconValue) : base(null) {
+            Copy.InitT(this, jconValue);
+        }
+
         public Person() : base(null) { }
     }
 }
