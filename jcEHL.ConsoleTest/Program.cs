@@ -1,6 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using jcEHL.ConsoleTest.TestClasses;
+using jcEHL.JCON;
+using Newtonsoft.Json;
 
 namespace jcEHL.ConsoleTest {
     public class Program {
@@ -41,21 +44,63 @@ namespace jcEHL.ConsoleTest {
             Console.WriteLine($"Size of JCON {jcon.Length}");
             Console.WriteLine($"JCON: {jcon}");
         }
-  
+
+        public static void JCONvsBSONvsJSONListSizeTest() {
+            var person = new Person {
+                FirstName = "Jojo",
+                LastName = "Doey"
+            };
+
+            var tmp = new List<Person>();
+
+            for (var x = 0; x < 100; x++) {
+                tmp.Add(person);
+            }
+
+            var json = JsonConvert.SerializeObject(tmp);
+            var jcon = JCONConvert.SerializeObject(tmp);
+
+            Console.WriteLine($"Size of JSON {json.Length}");
+
+            Console.WriteLine($"Size of JCON {jcon.Length}");
+
+            using (var sw = new StreamWriter("jcon.txt")) {
+                sw.Write(jcon);
+            }
+            
+            var jconList = JCONConvert.DeserializeObject<List<Person>>(jcon);
+
+            using (var sw = new StreamWriter("json.txt")) {
+                foreach (var item in jconList) {
+                    Console.WriteLine(item.FirstName + " " + item.LastName);
+                }
+            }
+        }
+
         public static void JCONTests() {
             var person = new Person {
                 FirstName = "Jojo",
                 LastName = "Doey"
             };
-            
+
             var jconString = person.ToJCON();
 
             Console.WriteLine($"Size of JCON {jconString.Length}");
 
-            var jconObj = new Person(jconString);
+            var jconObj = JCONConvert.DeserializeObject<Person>(jconString);
 
             Console.WriteLine($"FirstName: {jconObj.FirstName}");
             Console.WriteLine($"LastName: {jconObj.LastName}");
+
+            var content = new List<Person>();
+
+            for (var x = 0; x < 1000; x++) {
+                content.Add(new Person { FirstName = x.ToString(), LastName = (x * x).ToString() });
+            }
+
+            var serialized = JCONConvert.SerializeObject(content);
+
+            Console.WriteLine($"Size of JCON {serialized.Length}");
         }
 
         public static void BSONvsJSONCompressSizeTest() {
@@ -71,11 +116,11 @@ namespace jcEHL.ConsoleTest {
             Console.WriteLine($"Size of BSON (Compressed) {person.ToBSON().Length}");
         }
 
-        public static void BSONvsJSONSpeedTest() {
+        public static void BSONvsJSONvsJCONSpeedTest() {
             var content = new List<Person>();
 
             for (var x = 0; x < 1000; x++) {
-                content.Add(new Person { FirstName = x.ToString(), LastName = (x*x).ToString()});
+                content.Add(new Person { FirstName = x.ToString(), LastName = (x * x).ToString() });
             }
 
             var start = DateTime.Now;
@@ -83,7 +128,7 @@ namespace jcEHL.ConsoleTest {
             foreach (var item in content) {
                 item.ToJSON();
             }
-            
+
             Console.WriteLine($"Time to JSON: {DateTime.Now.Subtract(start).TotalSeconds}");
 
             start = DateTime.Now;
@@ -93,8 +138,16 @@ namespace jcEHL.ConsoleTest {
             }
 
             Console.WriteLine($"Time to BSON: {DateTime.Now.Subtract(start).TotalSeconds}");
+
+            start = DateTime.Now;
+
+            foreach (var item in content) {
+                item.ToJCON();
+            }
+
+            Console.WriteLine($"Time to JCON: {DateTime.Now.Subtract(start).TotalSeconds}");
         }
-        
+
         static void Main(string[] args) {
             Console.WriteLine("1> Copy Test");
             Console.WriteLine("2> BSON vs JSON (Size)");
@@ -102,10 +155,11 @@ namespace jcEHL.ConsoleTest {
             Console.WriteLine("4> BSON vs JSON (Compressed vs Uncompressed)");
             Console.WriteLine("5> JCON vs BSON vs JSON (Size)");
             Console.WriteLine("6> Object to JCON and string to JCON");
-            Console.WriteLine("7> Quit");
+            Console.WriteLine("7> JSON vs JCON List Size");
+            Console.WriteLine("8> Quit");
 
             var inputStr = Console.ReadLine();
-            
+
             switch (Convert.ToInt32(inputStr)) {
                 case 1:
                     CopyTest();
@@ -114,7 +168,7 @@ namespace jcEHL.ConsoleTest {
                     BSONvsJSONSizeTest();
                     break;
                 case 3:
-                    BSONvsJSONSpeedTest();
+                    BSONvsJSONvsJCONSpeedTest();
                     break;
                 case 4:
                     BSONvsJSONCompressSizeTest();
@@ -126,6 +180,9 @@ namespace jcEHL.ConsoleTest {
                     JCONTests();
                     break;
                 case 7:
+                    JCONvsBSONvsJSONListSizeTest();
+                    break;
+                case 8:
                     break;
             }
 
